@@ -15,6 +15,17 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        ViewBag.jugadoresCompetieron = Juego.devolverListaUsuarios();
+        return View("Index");
+    }
+    public IActionResult comenzar(string username, int dificultad)
+    {
+        Juego.inicializarJuego(username, dificultad);
+        return View("Index");
+    }
+    public IActionResult finJuego(int intentos)
+    {
+        
+        return View("Index");
     }
 }
