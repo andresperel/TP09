@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = "Juego";
+}
+<h1>@ViewBag.palabraActual</h1>
+<form>
+<p>Ingrese una palabra</p><input type ='text' id = 'intento'>
+<button onclick ='intentar()'>Enviar></button>
+</form>
+<input type= 'hidden' id='intentos'>

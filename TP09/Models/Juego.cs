@@ -63,33 +63,33 @@ public class Juego
 
 
     }
-    public void inicializarJuego(string nombreUsuario, int pDificultad)
+    public string inicializarJuego(string nombreUsuario, int pDificultad)
     {
         Usuario usuario = new Usuario(nombreUsuario, 0);
         jugadorActual = usuario;
         dificultad = pDificultad;
         listPalabra = new List<Palabra>();
         jugadores = new List<Usuario>();
+        return cargarPalabra(pDificultad);
+    }
+    public Juego(){
+        listPalabra = new List<Palabra>();
+        jugadores = new List<Usuario>();
+
     }
 
     private string cargarPalabra(int dificultad)
     {
-        int i = 0;
-        Palabra encontrada = null;
+        Palabra palabra;
 
-        while (encontrada == null && i < listPalabra.Count)
+        do
         {
-            if (listPalabra[i].dificultad == dificultad)
-            {
-                encontrada = listPalabra[i];
-            }
-            i++;
-        }
+          Random random = new Random();
+          palabra = listPalabra[random.Next(1, listPalabra.Count)];
 
-        if (encontrada != null) { return encontrada.texto; }
-        else { return "No hay palabras cargadas."; }
+        }while(palabra.dificultad != dificultad);
 
-
+        return palabra.texto; 
     }
     public void finJuego(int intentos)
     {
@@ -97,8 +97,12 @@ public class Juego
     }
     public List<Usuario> devolverListaUsuarios()
     {
-        jugadores.Sort((usuario1, usuario2) => usuario1.cantidadDeIntentos.CompareTo(usuario2.cantidadDeIntentos));
+        /*jugadores.Sort((usuario1, usuario2) => usuario1.cantidadDeIntentos.CompareTo(usuario2.cantidadDeIntentos));*/
 
         return jugadores;
+    }
+    public string mostrarNombre(string username)
+    {
+        return username;
     }
 }

@@ -13,19 +13,28 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+
     public IActionResult Index()
     {
-        ViewBag.jugadoresCompetieron = Juego.devolverListaUsuarios();
+        Juego juegoAhorcado = new Juego();
+        ViewBag.jugadoresCompitieron = juegoAhorcado.devolverListaUsuarios();
+        HttpContext.Session.SetString("juegoAhorcado", Objeto.ObjectToString(juegoAhorcado));
+
         return View("Index");
     }
     public IActionResult comenzar(string username, int dificultad)
     {
-        Juego.inicializarJuego(username, dificultad);
-        return View("Index");
+        Juego juegoAhorcado = Objeto.StringToObject<Juego>(HttpContext.Session.GetString("juegoAhorcado"));
+        ViewBag.palabraActual = juegoAhorcado.inicializarJuego(username, dificultad);
+        ViewBag.nombreUsuario = juegoAhorcado.mostrarNombre(username);
+        HttpContext.Session.SetString("juegoAhorcado", Objeto.ObjectToString(juegoAhorcado));
+        return View("Juego");
     }
     public IActionResult finJuego(int intentos)
     {
-        
+        Juego juegoAhorcado = Objeto.StringToObject<Juego>(HttpContext.Session.GetString("juegoAhorcado"));
+        juegoAhorcado.finJuego(intentos);
+        HttpContext.Session.SetString("juegoAhorcado", Objeto.ObjectToString(juegoAhorcado));
         return View("Index");
     }
 }
